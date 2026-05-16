@@ -1,13 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 
-const links = [
+type NavLink = { label: string; href: string; external?: boolean };
+
+const links: NavLink[] = [
   { label: "About", href: "#about" },
   { label: "Experience", href: "#experience" },
   { label: "Skills", href: "#skills" },
   { label: "Stack", href: "#stack" },
+  { label: "Blog", href: "/blog", external: true },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -16,6 +20,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { scrollYProgress } = useScroll();
   const progressWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  const router = useRouter();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -23,9 +28,13 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleNav = (href: string) => {
+  const handleNav = (link: NavLink) => {
     setMenuOpen(false);
-    const el = document.querySelector(href);
+    if (link.external) {
+      router.push(link.href);
+      return;
+    }
+    const el = document.querySelector(link.href);
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -65,7 +74,7 @@ export default function Navbar() {
             {links.map((l) => (
               <button
                 key={l.href}
-                onClick={() => handleNav(l.href)}
+                onClick={() => handleNav(l)}
                 className="text-sm text-[#6b7280] hover:text-white transition-colors duration-200"
               >
                 {l.label}
@@ -78,7 +87,7 @@ export default function Navbar() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => handleNav("#contact")}
+              onClick={() => handleNav({ label: "Contact", href: "#contact" })}
               className="rounded-full bg-[#5d5fef] px-5 py-2 text-sm font-semibold text-white"
               style={{ boxShadow: "0 0 20px rgba(93,95,239,0.4)" }}
             >
@@ -125,7 +134,7 @@ export default function Navbar() {
                   initial={{ opacity: 0, x: -16 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.06 }}
-                  onClick={() => handleNav(l.href)}
+                  onClick={() => handleNav(l)}
                   className="text-left text-lg font-medium text-white/80 hover:text-white py-2 border-b border-white/5 last:border-0"
                 >
                   {l.label}
@@ -135,7 +144,7 @@ export default function Navbar() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.35 }}
-                onClick={() => handleNav("#contact")}
+                onClick={() => handleNav({ label: "Contact", href: "#contact" })}
                 className="mt-2 w-full rounded-full bg-[#5d5fef] py-3 text-sm font-semibold text-white"
               >
                 Hire Me

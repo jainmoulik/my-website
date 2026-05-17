@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createReader } from "@keystatic/core/reader";
@@ -17,6 +18,41 @@ export async function generateStaticParams() {
   const reader = createReader(process.cwd(), keystaticConfig);
   const slugs = await reader.collections.posts.list();
   return slugs.map((slug) => ({ slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPost(slug);
+  if (!post) return {};
+
+  const title = `${post.title} | Moulik Jain`;
+  const description =
+    "Growth & Demand Gen leader with 12+ years experience in B2B SaaS and D2C. Head of Growth at Jeeva AI.";
+
+  return {
+    title,
+    description,
+    alternates: { canonical: `https://moulikjain.com/blog/${slug}` },
+    openGraph: {
+      title,
+      description,
+      url: `https://moulikjain.com/blog/${slug}`,
+      type: "article",
+      ...(post.publishedDate && {
+        publishedTime: new Date(post.publishedDate).toISOString(),
+      }),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      creator: "@moulikjain",
+    },
+  };
 }
 
 export default async function PostPage({

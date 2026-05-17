@@ -1,8 +1,16 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { createReader } from "@keystatic/core/reader";
 import keystaticConfig from "@/keystatic.config";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Blog | Moulik Jain — Growth Marketing Insights",
+  description:
+    "Growth marketing, demand gen, PLG, SEO, and AI insights from Moulik Jain — 12+ year B2B and D2C marketing leader.",
+  alternates: { canonical: "https://moulikjain.com/blog" },
+};
 
 async function getPosts() {
   const reader = createReader(process.cwd(), keystaticConfig);
@@ -32,12 +40,10 @@ export default async function BlogPage() {
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#5d5fef] mb-3">
           Writing
         </p>
-        <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
-          Blog
-        </h1>
+        <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">Blog</h1>
         <p className="text-[#6b7280] text-base">
-          Thoughts on growth, demand gen, and building at the intersection of
-          AI and marketing.
+          Thoughts on growth, demand gen, and building at the intersection of AI
+          and marketing.
         </p>
       </div>
 
@@ -63,12 +69,8 @@ export default async function BlogPage() {
           <div className="flex flex-col gap-5">
             {posts.map((post) => (
               <Link key={post.slug} href={`/blog/${post.slug}`}>
-                <article
-                  className="group relative rounded-2xl border border-white/[0.08] bg-white/[0.02] p-7 backdrop-blur-sm transition-all duration-300 hover:border-[#5d5fef]/40 hover:bg-white/[0.04] overflow-hidden cursor-pointer"
-                >
-                  {/* Hover glow */}
+                <article className="group relative rounded-2xl border border-white/[0.08] bg-white/[0.02] p-7 backdrop-blur-sm transition-all duration-300 hover:border-[#5d5fef]/40 hover:bg-white/[0.04] overflow-hidden cursor-pointer">
                   <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-[#5d5fef]/8 to-transparent" />
-
                   <div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                     <div className="flex-1">
                       <h2 className="text-lg font-semibold text-white group-hover:text-[#a5b4fc] transition-colors duration-200 mb-1">
@@ -76,10 +78,11 @@ export default async function BlogPage() {
                       </h2>
                       {post.publishedDate && (
                         <time className="text-sm text-[#6b7280]">
-                          {new Date(post.publishedDate).toLocaleDateString(
-                            "en-US",
-                            { year: "numeric", month: "long", day: "numeric" }
-                          )}
+                          {new Date(post.publishedDate).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          })}
                         </time>
                       )}
                     </div>

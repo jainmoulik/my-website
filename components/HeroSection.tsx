@@ -117,9 +117,9 @@ export default function HeroSection() {
         </motion.div>
 
         {/* Name */}
-        <motion.h2 variants={fadeUpVariants} className="text-lg font-medium text-[#6b7280] tracking-widest uppercase">
+        <motion.p variants={fadeUpVariants} className="text-lg font-medium text-[#6b7280] tracking-widest uppercase">
           Moulik Jain
-        </motion.h2>
+        </motion.p>
 
         {/* Headline */}
         <motion.h1 variants={fadeUpVariants} className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight tracking-tight">

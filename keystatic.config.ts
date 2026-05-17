@@ -16,6 +16,17 @@ export default config({
           label: "Published Date",
           validation: { isRequired: true },
         }),
+        category: fields.select({
+          label: "Category",
+          options: [
+            { label: "Growth Marketing", value: "growth-marketing" },
+            { label: "Demand Gen", value: "demand-gen" },
+            { label: "Paid Media", value: "paid-media" },
+            { label: "SEO", value: "seo" },
+            { label: "PLG / SLG", value: "plg-slg" },
+          ],
+          defaultValue: "growth-marketing",
+        }),
         content: fields.document({
           label: "Content",
           formatting: true,

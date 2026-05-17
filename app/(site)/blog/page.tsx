@@ -13,6 +13,14 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://moulikjain.com/blog" },
 };
 
+const categoryMeta: Record<string, { label: string; color: string }> = {
+  "growth-marketing": { label: "Growth Marketing", color: "#5d5fef" },
+  "demand-gen":       { label: "Demand Gen",        color: "#22d3ee" },
+  "paid-media":       { label: "Paid Media",         color: "#f59e0b" },
+  "seo":              { label: "SEO",                color: "#10b981" },
+  "plg-slg":          { label: "PLG / SLG",          color: "#7c3aed" },
+};
+
 function countWords(nodes: any[]): number {
   let count = 0;
   for (const node of nodes) {
@@ -96,10 +104,7 @@ export default async function BlogPage() {
           <div className="flex flex-col items-center gap-4 py-20 text-center">
             <div
               className="flex h-16 w-16 items-center justify-center rounded-2xl text-2xl"
-              style={{
-                backgroundColor: "#5d5fef15",
-                border: "1px solid #5d5fef30",
-              }}
+              style={{ backgroundColor: "#5d5fef15", border: "1px solid #5d5fef30" }}
             >
               ✍️
             </div>
@@ -113,41 +118,57 @@ export default async function BlogPage() {
           </div>
         ) : (
           <div className="flex flex-col gap-5">
-            {posts.map((post) => (
-              <Link key={post.slug} href={`/blog/${post.slug}`}>
-                <article className="group relative rounded-2xl border border-white/[0.08] bg-white/[0.02] p-7 backdrop-blur-sm transition-all duration-300 hover:border-[#5d5fef]/40 hover:bg-white/[0.04] overflow-hidden cursor-pointer">
-                  <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-[#5d5fef]/8 to-transparent" />
-                  <div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                    <div className="flex-1">
-                      <h2 className="text-lg font-semibold text-white group-hover:text-[#a5b4fc] transition-colors duration-200 mb-2">
-                        {post.title}
-                      </h2>
-                      <div className="flex items-center gap-3">
-                        {post.publishedDate && (
-                          <time className="text-sm text-[#6b7280]">
-                            {new Date(post.publishedDate).toLocaleDateString(
-                              "en-US",
-                              {
+            {posts.map((post) => {
+              const cat = post.category
+                ? categoryMeta[post.category] ?? categoryMeta["growth-marketing"]
+                : categoryMeta["growth-marketing"];
+
+              return (
+                <Link key={post.slug} href={`/blog/${post.slug}`}>
+                  <article className="group relative rounded-2xl border border-white/[0.08] bg-white/[0.02] p-7 backdrop-blur-sm transition-all duration-300 hover:border-[#5d5fef]/40 hover:bg-white/[0.04] overflow-hidden cursor-pointer">
+                    <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-[#5d5fef]/8 to-transparent" />
+                    <div className="relative flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                      <div className="flex-1">
+                        {/* Category tag */}
+                        <span
+                          className="inline-block rounded-full px-2.5 py-0.5 text-[11px] font-semibold mb-2"
+                          style={{
+                            backgroundColor: `${cat.color}18`,
+                            color: cat.color,
+                            border: `1px solid ${cat.color}35`,
+                          }}
+                        >
+                          {cat.label}
+                        </span>
+
+                        <h2 className="text-lg font-semibold text-white group-hover:text-[#a5b4fc] transition-colors duration-200 mb-2">
+                          {post.title}
+                        </h2>
+
+                        <div className="flex flex-wrap items-center gap-2">
+                          {post.publishedDate && (
+                            <time className="text-sm text-[#6b7280]">
+                              {new Date(post.publishedDate).toLocaleDateString("en-US", {
                                 year: "numeric",
                                 month: "long",
                                 day: "numeric",
-                              }
-                            )}
-                          </time>
-                        )}
-                        <span className="text-white/20">·</span>
-                        <span className="text-sm text-[#6b7280]">
-                          {post.readingTime} min read
-                        </span>
+                              })}
+                            </time>
+                          )}
+                          <span className="text-white/20 text-xs">·</span>
+                          <span className="text-sm text-[#6b7280]">
+                            {post.readingTime} min read
+                          </span>
+                        </div>
                       </div>
+                      <span className="flex-shrink-0 text-[#5d5fef] text-sm font-medium group-hover:translate-x-1 transition-transform duration-200 pt-1">
+                        Read →
+                      </span>
                     </div>
-                    <span className="flex-shrink-0 text-[#5d5fef] text-sm font-medium group-hover:translate-x-1 transition-transform duration-200">
-                      Read →
-                    </span>
-                  </div>
-                </article>
-              </Link>
-            ))}
+                  </article>
+                </Link>
+              );
+            })}
           </div>
         )}
       </div>

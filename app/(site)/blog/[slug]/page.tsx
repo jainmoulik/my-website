@@ -74,7 +74,16 @@ export async function generateMetadata({
   if (!post) return {};
 
   const title = `${post.title} | Moulik Jain`;
+
+  // Extract first paragraph text for a post-specific OG description
+  const nodes = (await post.content()) as DocNode[];
+  const firstPara = nodes.find((n) => n.type === "paragraph");
+  const paraText = (firstPara?.children ?? [])
+    .map((c) => c.text ?? "")
+    .join("")
+    .trim();
   const description =
+    paraText.slice(0, 157).trimEnd() + (paraText.length > 157 ? "…" : "") ||
     "Growth & Demand Gen leader with 12+ years experience in B2B SaaS and D2C. Head of Growth at Jeeva AI.";
 
   return {

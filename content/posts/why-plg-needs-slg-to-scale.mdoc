@@ -1,0 +1,120 @@
+---
+title: Why PLG Needs SLG to Actually Scale (And How to Build Both)
+publishedDate: "2026-05-17"
+---
+
+Let me say something that might get me unfollowed by some SaaS Twitter crowd: **Product-Led Growth, on its own, will not take you to $50M ARR.**
+
+I've seen it play out first-hand. At Onsitego, we built a genuinely strong PLG motion — 200K+ freemium users, solid activation, viral loops that worked. And then we hit a ceiling. The free users weren't converting at the rate we needed to hit our ARR targets. Expansion was slow. Enterprise didn't come inbound.
+
+That's when I understood what most PLG hype leaves out: PLG is a *top-of-funnel machine*, not a full revenue strategy. If you want to actually scale, you need to wire in a Sales-Led motion on top of it. Here's how.
+
+## What PLG Actually Means (vs The Hype)
+
+PLG is the model where the product itself drives acquisition, conversion, and expansion — rather than a sales team. Think Slack, Figma, Notion, Calendly. Users discover the product, activate on their own, hit a paywall or feature gate, and either upgrade or invite teammates who eventually do.
+
+The core mechanics are:
+
+- **Self-serve onboarding** — no sales call required to get started
+- **Freemium or free trial** — low-friction entry point
+- **In-product virality** — invitations, sharing, collaboration features that spread the product organically
+- **Usage-based triggers** — upgrade prompts tied to real usage moments, not arbitrary time-based nudges
+
+Done well, PLG is incredibly capital-efficient. Your CAC is low. Your NPS is high because customers actually use the product before paying. And your activation feedback loop is tight — you learn fast what's working.
+
+Done poorly, PLG becomes an expensive way to generate free users who never pay.
+
+## The Freemium Ceiling: Why Pure PLG Stalls at Mid-Market
+
+Here's the dirty secret: most PLG models hit a wall around $5M–$15M ARR. The reasons are structural.
+
+**Problem 1: Individual users don't have budget authority.**
+Your free users are ICs — developers, marketers, analysts. They love your product. But they can't sign a $30K contract. That decision goes up the chain, and now you're invisible to the decision-maker who's never touched your product.
+
+**Problem 2: Enterprise won't self-serve.**
+Mid-market and enterprise buyers have procurement processes, security reviews, legal, and IT. They need a human. A free trial with a credit card prompt doesn't move these deals.
+
+**Problem 3: Expansion stalls without proactive motion.**
+In pure PLG, you wait for users to hit limits and upgrade. But at mid-market, the teams that should expand aren't always the ones hitting limits — they're the ones with budget but no champion pushing internally. Without a sales touch, that expansion revenue sits on the table.
+
+**Problem 4: Your activation rate lies to you.**
+You might have 40% of users completing your activation flow. But if the activated users who matter (the ones at companies with $50K+ ACV potential) are activating at 12%, you have a very different problem than your aggregate numbers suggest.
+
+## Where SLG Layers In
+
+Sales-Led Growth doesn't replace PLG. It *amplifies* it by targeting the conversion points where PLG breaks down.
+
+The three moments SLG should activate:
+
+1. **When a PQL (Product Qualified Lead) hits your threshold** — a user at a target company who's used the product enough to demonstrate intent but hasn't upgraded
+2. **When a company-level signal fires** — multiple users from the same domain are in the product, suggesting an un-coordinated team adoption
+3. **When a self-serve deal stalls** — a user starts a trial, engages heavily for two weeks, then goes quiet without converting
+
+At each of these points, a well-timed human touch closes the gap that the product can't bridge alone.
+
+## The PLG+SLG Motion: How to Identify PQLs and Hand Off to Sales
+
+This is the architecture most teams struggle to get right. Here's a framework that works.
+
+### Define Your PQL Criteria
+
+A PQL is not just an MQL who's also a user. It's a user who has demonstrated intent *through product behaviour*. Your PQL criteria should combine:
+
+- **Firmographic fit** — company size, industry, geography match your ICP
+- **Activation milestone** — user has completed a meaningful action in the product (not just logged in twice)
+- **Usage depth** — frequency and breadth of feature usage above a threshold
+- **Expansion signal** — user has invited others, hit a usage limit, or exported data
+
+An example PQL definition: "User at a 50–500 employee SaaS company who has created 3+ projects, invited at least 1 teammate, and logged in 4+ times in the last 14 days."
+
+Score this in your CRM. Automate the threshold trigger. Don't rely on a sales rep manually reviewing usage dashboards.
+
+### Build the Handoff Workflow
+
+When a PQL fires:
+
+1. **Notify the AE** — Slack alert, CRM task, whatever your team actually monitors
+2. **Enrich the context** — pull their company data, recent product activity, feature usage summary into the CRM record automatically
+3. **Trigger a personalised outreach** — the AE reaches out referencing the user's actual product usage ("I can see you've set up your first pipeline in [product] — happy to show you how teams like yours use the enterprise reporting features")
+4. **Set a clear SLA** — PQLs should be contacted within 24–48 hours. After that, intent decays fast.
+
+### The Metrics That Matter
+
+Stop reporting MQLs to your board if you're running PLG. The metrics that matter in a PLG+SLG world:
+
+- **PQL → Opportunity rate** — what % of PQLs become real pipeline?
+- **Activation rate by ICP segment** — not all activations are equal
+- **Time to PQL** — how long from sign-up to qualifying threshold?
+- **Self-serve → Assisted conversion split** — what % of revenue comes from each motion?
+- **Expansion from PLG accounts** — are self-serve converts expanding without sales touch?
+
+If you're running both motions and can't answer these questions, your BI setup is broken before your GTM is.
+
+## Practical Framework for Teams Building This Hybrid Motion
+
+If you're starting from zero or trying to retrofit SLG onto an existing PLG base, here's the sequence that works:
+
+**Step 1: Instrument your product properly (Month 1)**
+Before you can identify PQLs, you need event tracking that captures meaningful actions — not just pageviews. Define your activation milestone first (the "aha moment" that predicts retention), then instrument backwards from there. Mixpanel, Amplitude, or even GA4 custom events will work.
+
+**Step 2: Define your ICP with firmographic precision (Month 1–2)**
+"Mid-market SaaS" is not an ICP. "B2B SaaS companies with 51–500 employees, US/EU, Series A or B, using Salesforce or HubSpot" is an ICP. Your PQL scoring won't work without this.
+
+**Step 3: Build the PQL scoring model (Month 2–3)**
+Start simple. A weighted score across the firmographic + behavioural signals. Plug it into HubSpot or your CRM. Set a threshold. Test and iterate.
+
+**Step 4: Hire or designate a sales role for PLG-sourced leads (Month 3)**
+PLG-sourced deals have different dynamics than outbound. The reps need to be consultative and product-fluent, not pitch-heavy. If you drop a traditional enterprise AE on top of a PLG user base, you'll kill the relationship.
+
+**Step 5: Create the feedback loop (Month 3+)**
+Sales should be feeding product. "The top objection in my last 10 PQL calls was X" should become a product prioritisation input. The PLG→SLG motion only gets better if both sides talk.
+
+## My POV: Stop Choosing Between PLG and SLG
+
+The "PLG vs SLG" debate is a false one. They're not competing philosophies — they serve different buyers at different stages of your company.
+
+PLG gets you efficient top-of-funnel, fast feedback loops, and high-trust acquisition. SLG gets you into mid-market and enterprise, drives expansion, and closes the deals that self-serve can't.
+
+The companies winning right now — your HubSpots, Figmas, Asanas — run both motions simultaneously, with a thoughtful handoff layer in between.
+
+If you're a growth leader at a PLG-first company and you're not thinking about where SLG needs to plug in, you're leaving revenue on the table. Build both.

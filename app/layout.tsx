@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -36,16 +37,18 @@ export const metadata: Metadata = {
     description,
     siteName: "Moulik Jain",
     locale: "en_US",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Moulik Jain | Growth & Demand Gen Leader",
     description,
     creator: "@moulikjain",
+    images: ["/opengraph-image"],
   },
 };
 
-const jsonLd = {
+const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Moulik Jain",
@@ -74,6 +77,28 @@ const jsonLd = {
   ],
 };
 
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Moulik Jain",
+  url: "https://moulikjain.com",
+  potentialAction: {
+    "@type": "SearchAction",
+    target: "https://moulikjain.com/blog?q={search_term_string}",
+    "query-input": "required name=search_term_string",
+  },
+};
+
+const speakableSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://moulikjain.com",
+  speakable: {
+    "@type": "SpeakableSpecification",
+    cssSelector: ["#hero", "#about"],
+  },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -87,7 +112,15 @@ export default function RootLayout({
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(speakableSchema) }}
         />
         <Script
           id="gtm-script"
@@ -111,6 +144,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           />
         </noscript>
         {children}
+        <SpeedInsights />
       </body>
     </html>
   );

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createReader } from "@keystatic/core/reader";
-import { DocumentRenderer } from "@keystatic/core/renderer";
 import keystaticConfig from "@/keystatic.config";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import PostContent from "@/components/PostContent";
 
 export const dynamic = "force-dynamic";
 
@@ -75,7 +75,6 @@ export async function generateMetadata({
 
   const title = `${post.title} | Moulik Jain`;
 
-  // Extract first paragraph text for a post-specific OG description
   const nodes = (await post.content()) as DocNode[];
   const firstPara = nodes.find((n) => n.type === "paragraph");
   const paraText = (firstPara?.children ?? [])
@@ -89,11 +88,11 @@ export async function generateMetadata({
   return {
     title,
     description,
-    alternates: { canonical: `https://moulikjain.com/blog/${slug}` },
+    alternates: { canonical: `https://moulikjain.com/blogs/${slug}` },
     openGraph: {
       title,
       description,
-      url: `https://moulikjain.com/blog/${slug}`,
+      url: `https://moulikjain.com/blogs/${slug}`,
       type: "article",
       images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
       ...(post.publishedDate && {
@@ -126,7 +125,6 @@ export default async function PostPage({
   const wordCount = countWords(docNodes);
   const readingTime = Math.max(1, Math.ceil(wordCount / 200));
 
-  // BlogPosting JSON-LD
   const blogSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -143,42 +141,8 @@ export default async function PostPage({
     ...(post.publishedDate && {
       datePublished: new Date(post.publishedDate).toISOString(),
     }),
-    url: `https://moulikjain.com/blog/${slug}`,
-    mainEntityOfPage: `https://moulikjain.com/blog/${slug}`,
-  };
-
-  // Custom heading renderer that adds IDs (counter-based, safe in SSR)
-  const headingState = { idx: 0 };
-  const renderers = {
-    block: {
-      heading({
-        level,
-        children,
-      }: {
-        level: 1 | 2 | 3 | 4 | 5 | 6;
-        children: React.ReactNode;
-      }) {
-        let id: string | undefined;
-        if (level === 2 || level === 3) {
-          id = headings[headingState.idx]?.id;
-          headingState.idx++;
-        }
-        const cls =
-          level === 1
-            ? "text-3xl font-bold text-white mt-10 mb-4"
-            : level === 2
-              ? "text-2xl font-bold text-white mt-10 mb-3"
-              : level === 3
-                ? "text-xl font-semibold text-white mt-7 mb-2"
-                : "text-lg font-semibold text-white mt-5 mb-2";
-        if (level === 1) return <h1 id={id} className={cls}>{children}</h1>;
-        if (level === 2) return <h2 id={id} className={cls}>{children}</h2>;
-        if (level === 3) return <h3 id={id} className={cls}>{children}</h3>;
-        if (level === 4) return <h4 id={id} className={cls}>{children}</h4>;
-        if (level === 5) return <h5 id={id} className={cls}>{children}</h5>;
-        return <h6 id={id} className={cls}>{children}</h6>;
-      },
-    },
+    url: `https://moulikjain.com/blogs/${slug}`,
+    mainEntityOfPage: `https://moulikjain.com/blogs/${slug}`,
   };
 
   return (
@@ -192,8 +156,8 @@ export default async function PostPage({
         <Breadcrumbs
           crumbs={[
             { label: "Home", href: "/" },
-            { label: "Blog", href: "/blog" },
-            { label: post.title, href: `/blog/${slug}` },
+            { label: "Blog", href: "/blogs" },
+            { label: post.title, href: `/blogs/${slug}` },
           ]}
         />
 
@@ -229,10 +193,7 @@ export default async function PostPage({
             </p>
             <ol className="flex flex-col gap-1.5">
               {headings.map((h) => (
-                <li
-                  key={h.id}
-                  className={h.level === 3 ? "pl-4" : ""}
-                >
+                <li key={h.id} className={h.level === 3 ? "pl-4" : ""}>
                   <a
                     href={`#${h.id}`}
                     className="text-sm text-[#94a3b8] hover:text-white transition-colors duration-200 leading-snug"
@@ -245,10 +206,11 @@ export default async function PostPage({
           </nav>
         )}
 
-        {/* Content */}
-        <div className="prose-keystatic">
-          <DocumentRenderer document={content} renderers={renderers} />
-        </div>
+        {/* Content — rendered in a client boundary to avoid hook errors */}
+        <PostContent
+          document={docNodes as Record<string, unknown>[]}
+          headings={headings}
+        />
 
         {/* Author Bio */}
         <div className="mt-16 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 flex items-start gap-5">
@@ -285,7 +247,7 @@ export default async function PostPage({
         <div className="mt-10 pt-8 border-t border-white/[0.08]">
           <div className="flex items-center justify-between">
             <Link
-              href="/blog"
+              href="/blogs"
               className="text-sm text-[#6b7280] hover:text-white transition-colors"
             >
               ← All posts

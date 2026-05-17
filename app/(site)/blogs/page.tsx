@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "Blog | Moulik Jain — Growth Marketing Insights",
   description:
     "Growth marketing, demand gen, PLG, SEO, and AI insights from Moulik Jain — 12+ year B2B and D2C marketing leader.",
-  alternates: { canonical: "https://moulikjain.com/blog" },
+  alternates: { canonical: "https://moulikjain.com/blogs" },
 };
 
 const categoryMeta: Record<string, { label: string; color: string }> = {
@@ -65,7 +65,7 @@ export default async function BlogPage() {
     itemListElement: posts.map((p, i) => ({
       "@type": "ListItem",
       position: i + 1,
-      url: `https://moulikjain.com/blog/${p.slug}`,
+      url: `https://moulikjain.com/blogs/${p.slug}`,
       name: p.title,
     })),
   };
@@ -81,7 +81,7 @@ export default async function BlogPage() {
         <Breadcrumbs
           crumbs={[
             { label: "Home", href: "/" },
-            { label: "Blog", href: "/blog" },
+            { label: "Blog", href: "/blogs" },
           ]}
         />
 
@@ -124,7 +124,7 @@ export default async function BlogPage() {
                 : categoryMeta["growth-marketing"];
 
               return (
-                <Link key={post.slug} href={`/blog/${post.slug}`}>
+                <Link key={post.slug} href={`/blogs/${post.slug}`}>
                   <article className="group relative rounded-2xl border border-white/[0.08] bg-white/[0.02] p-7 backdrop-blur-sm transition-all duration-300 hover:border-[#5d5fef]/40 hover:bg-white/[0.04] overflow-hidden cursor-pointer">
                     <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-[#5d5fef]/8 to-transparent" />
                     <div className="relative flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">

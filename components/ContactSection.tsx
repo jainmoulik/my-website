@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { fadeUpVariants, staggerContainer } from "@/lib/variants";
 
@@ -17,13 +18,6 @@ const contacts = [
     value: "linkedin.com/in/moulik-jain",
     href: "https://linkedin.com/in/moulik-jain",
     color: "#22d3ee",
-  },
-  {
-    icon: "📱",
-    label: "Phone",
-    value: "+91 70739 739 39",
-    href: "tel:+917073973939",
-    color: "#7c3aed",
   },
 ];
 
@@ -123,29 +117,28 @@ export default function ContactSection() {
               </motion.a>
             ))}
           </motion.div>
-
-          <div className="mt-10 text-center">
-            <motion.a
-              href="mailto:jainmoulik@gmail.com"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-2 rounded-full bg-[#5d5fef] px-10 py-4 text-sm font-semibold text-white"
-              style={{ boxShadow: "0 0 30px rgba(93,95,239,0.5), 0 0 60px rgba(93,95,239,0.2)" }}
-            >
-              Say Hello →
-            </motion.a>
-          </div>
         </motion.div>
 
-        <motion.p
+        <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeUpVariants}
-          className="text-center text-xs text-[#6b7280] mt-10"
+          className="text-center mt-10 flex flex-col items-center gap-3"
         >
-          © 2025 Moulik Jain · Built with Next.js & Framer Motion
-        </motion.p>
+          <p className="text-xs text-[#6b7280]">
+            © 2026 Moulik Jain · Growth leader, writer, builder
+          </p>
+          <div className="flex items-center gap-4 text-xs text-[#4b5563]">
+            <Link href="/privacy-policy" className="hover:text-[#6b7280] transition-colors">
+              Privacy Policy
+            </Link>
+            <span>·</span>
+            <Link href="/terms" className="hover:text-[#6b7280] transition-colors">
+              Terms &amp; Conditions
+            </Link>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
